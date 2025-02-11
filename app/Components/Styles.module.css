@@ -1,0 +1,49 @@
+.center{
+    margin-left: 16%;
+    margin-right: 16%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5%;
+}
+.dropdown{
+    text-align: center; 
+   display: inline-flex; 
+   align-items: center; 
+   font-size: 12px;
+   line-height: 18px;
+   font-weight: 500;
+   padding: 4px 10px 4px 10px;
+   border:1px solid #DBDBDB;
+   border-radius: 40px;
+}
+.dropdown:hover{
+    border:1px solid #5551ff;
+    color: #5551ff;
+}
+.ul{
+    position: absolute;
+    right: 0;
+    top: 1.9rem;
+    max-height:384px;
+    min-width: 176px;
+
+}
+.li{
+    font-size: 13px;
+    line-height: 19.5px;
+    color: #171717;
+}
+.filter{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.noscrollbar{
+    filter: invert(32%) sepia(100%) saturate(290%) hue-rotate(310deg) brightness(130%) contrast(98%);
+  }
+  .yellow{
+    filter: invert(61%) sepia(94%) saturate(847%) hue-rotate(359deg) brightness(101%) contrast(101%);
+  }
+  .green{
+    filter: invert(58%) sepia(57%) saturate(551%) hue-rotate(137deg) brightness(98%) contrast(93%);
+  }
