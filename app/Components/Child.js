@@ -93,19 +93,21 @@ export  function Child({selectedItem}){
     });
     
     useEffect(() => {
-      
-        fetch("/api/task")
-          .then((res) => res.json())
-          .then((data) => {
-            setColumns(data);
-            initialColumns=data;
-            
-            console.log(initialColumns,"Initial column");
-          })
-          .catch((error) => console.error("Error fetching data:", error));
-   
-      
+      const fetchData = async () => {
+        try {
+          const res = await fetch("/api/task");
+          const data = await res.json();
+          setColumns(data);
+          initialColumns = data;
+          console.log(initialColumns, "Initial column");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+    
+      fetchData();
     }, []);
+    
   
     useEffect(() => {
       const filteredColumns = initialColumns.map((column) => ({
