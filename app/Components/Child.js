@@ -249,8 +249,8 @@ export  function Child({selectedItem}){
               <div className="flex overflow-x-auto md:flex-row gap-4 ">
                 {columns.map((column) => (
                   <div key={column.id} className="flex-1 min-w-[250px]">
-                    <h2
-                      className={`text-[13px] flex gap-1 font-semibold leading-[19.5px] rounded-tl-lg rounded-tr-lg p-2 bg-[#F8F8F8] border border-gray-300 
+                    <p
+                      className={`text-[13px] flex gap-1 font-semibold leading-[19.5px] rounded-tl-lg rounded-tr-lg p-2 bg-[#F8F8F8] border border-gray-300  items-center
           ${column.title === "Planned" ? "text-pink-500" : ""}
           ${column.title === "In Progress" ? "text-[#FFAB04]" : ""}
           ${column.title === "Completed" ? "text-green-500" : ""}
@@ -274,7 +274,7 @@ export  function Child({selectedItem}){
                         </span>
                       )}
                       {column.title}
-                    </h2>
+                    </p>
                     <Droppable droppableId={column.id}>
                       {(provided, snapshot) => (
                         <div
@@ -313,11 +313,11 @@ export  function Child({selectedItem}){
                                       <RiArrowUpSLine />
                                       <span>{card.upvotes}</span>
                                     </div>
-                                    <div className="flex flex-col justify-center">
+                                    <div className="flex flex-col justify-center cursor-pointer"  onClick={() => opendetails(card.id)}>
                                       <div>
                                         <p
                                           className="text-[12px] font-medium leading-[19.5px] text-[#171717] "
-                                          onClick={() => opendetails(card.id)}
+                                         
                                         >
                                           {card.content.length > 75 ? card.content.slice(0, 75) + "..." : card.content}
                                         </p>
@@ -359,9 +359,9 @@ export  function Child({selectedItem}){
                 <div className="relative bg-white rounded-lg shadow-sm h-[100%] overflow-y-auto scrollbar-hide border border-[#D1D5DB] ">
                   {/* Modal Header */}
                   <div className="flex items-center justify-between  p-1 md:p-2 border-b border-b-[#D1D5DB] rounded-t ">
-                    <h3 className="text-[#171717] font-medium p-2 border border-[#D1D5DB] rounded-lg  hover:bg-[#F8F8F8]">
+                    <button className="text-[#171717] font-medium p-2 border cursor-pointer border-[#D1D5DB] rounded-lg  hover:bg-[#F8F8F8]">
                       <FiArrowLeft onClick={() => setIsOpen(false)} />
-                    </h3>
+                    </button>
                   </div>
     
                   {/* Modal Body */}
