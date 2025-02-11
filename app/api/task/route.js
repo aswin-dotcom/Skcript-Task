@@ -207,7 +207,7 @@ export async function GET() {
             label: "Setup",
             Date: "2023-06-25",
             upvotes: 8,
-            status: "Feature request",
+            status: "Completed",
             Board: "Integration",
             PostedBy: "Jack Samuvel",
             Assignedto:"Jeff",
