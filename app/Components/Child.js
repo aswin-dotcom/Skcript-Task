@@ -378,7 +378,7 @@ export  function Child({selectedItem}){
                             handleUpvoters(popupDetails.id);
                             popupvotes(popupDetails.id);
                           }}
-                          className="flex flex-col items-center text-[12px] leading-[12px] text-center text-[#171717] border border-[#DBDBDB] p-[6px] px-[8px] max-h-[40px]  
+                          className="flex flex-col items-center text-[12px] cursor-pointer leading-[12px] text-center text-[#171717] border border-[#DBDBDB] p-[6px] px-[8px] max-h-[40px]  
         rounded-[8px]   data-[upvoted=true]:bg-[#F6F6FF] data-[upvoted=true]:border-[#5551FF]"
                           data-upvoted={upvotedCards.has(popupDetails.id)}
                         >
@@ -501,7 +501,7 @@ export  function Child({selectedItem}){
                             {subscribe}
                           </button>
                           <div
-                            className="flex justify-between mt-2 mb-2  text-[#171717] p-2 text-[13px]
+                            className="flex justify-between mt-2 mb-2 cursor-pointer  text-[#171717] p-2 text-[13px]
                           "
                           >
                             Upvoters

@@ -97,7 +97,7 @@ export default function Parent() {
             </div>
           )}
         </div> */}
-        <div className="relative inline-flex h-[27px] whitespace-nowrap">
+        <div className="relative cursor-pointer inline-flex h-[27px] whitespace-nowrap">
           <button
             onClick={toggleFirstDropdown}
             className={Styles.dropdown}
@@ -140,7 +140,7 @@ export default function Parent() {
                   <li key={item} className={Styles.li}>
                     <a
                      
-                      className="block px-4 py-1 m-1 rounded-[5px] hover:bg-gray-100  " onClick={() => handleClick(item)}
+                      className="block cursor-pointer px-4 py-1 m-1 rounded-[5px] hover:bg-gray-100  " onClick={() => handleClick(item)}
                     >
                       {item}
                     </a>
