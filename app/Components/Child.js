@@ -73,6 +73,7 @@ let initialColumns = [
     // },custom
   ];
 export  function Child({selectedItem}){
+   
     const [columns, setColumns] = useState(initialColumns);
     const [upvotedCards, setUpvotedCards] = useState(new Set());
     const [filter, setfilter] = useState("");
@@ -82,16 +83,18 @@ export  function Child({selectedItem}){
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
     const [subscribe, setSubscribe] = useState("Unsubscribe");
-    // const [Subscribe,Unsubscribe]=useState('Unsubscribe');
+  
     const timestamp = new Date().toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
+      year: "numeric",// Displays the full year (e.g., 2025)
+      month: "short",// Displays a short month name (e.g., Feb)
+      day: "numeric", //Displays the day of the month (e.g., 11)
+      hour: "numeric",//Displays the hour (e.g., 3 PM)
+      minute: "numeric",//Displays the minutes (e.g., 45)
+      hour12: true,// Enables 12-hour format with AM/PM
     });
-    
+
+
+       //useEffect to load the data
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -108,7 +111,7 @@ export  function Child({selectedItem}){
       fetchData();
     }, []);
     
-  
+     //useEffect to identify the particular task based on  filter
     useEffect(() => {
       const filteredColumns = initialColumns.map((column) => ({
         ...column,
@@ -116,11 +119,9 @@ export  function Child({selectedItem}){
       }));
       setColumns(filteredColumns);
     }, [selectedItem]);
-
-
-
-  
-  
+   
+ 
+    //handle upvotes in home page
     const handleUpvoters = (cardId) => {
       setColumns((prevColumns) =>
         prevColumns.map((col) => ({
@@ -148,14 +149,16 @@ export  function Child({selectedItem}){
         return newSet;
       });
     };
-  
+    
+    //handle upvotes in popuo page
     const popupvotes = (cardId) => {
       setPopupDetails((prev) => ({
         ...prev,
         upvotes: upvotedCards.has(cardId) ? prev.upvotes - 1 : prev.upvotes + 1,
       }));
     };
-  
+   
+    //handle drag and drop event in the view 
     const onDragEnd = (result) => {
       if (!result.destination) return;
       const { source, destination } = result;
@@ -201,9 +204,13 @@ export  function Child({selectedItem}){
         );
       }
     };
+
+    //changing the state of unsubscribe button in popup
     const handleSubscription = () => {
       setSubscribe(subscribe === "Unsubscribe" ? "Get notified" : "Unsubscribe");
     };
+
+  //get task details to open the popup
     const opendetails = (id) => {
       console.log(id);
       const popupdetails = findCardById(columns, id);
@@ -218,6 +225,8 @@ export  function Child({selectedItem}){
       }
       setIsOpen(true);
     };
+
+    // using cardId and columns we can get the task details
     const findCardById = (columns, cardId) => {
       for (const column of columns) {
         const card = column.cards.find((c) => c.id === cardId);
@@ -225,17 +234,15 @@ export  function Child({selectedItem}){
       }
       return null; // Return null if no card is found
     };
-    // const onChangeHandler=(e)=>{
-    //   setComment(e.target.value);
-  
-    // }
+   
+    //for adding comments for a particular task in popup
     const onClickHandler = (id) => {
       if(comment.length>0){
         const popupdetails = findCardById(columns, id);
         if (popupdetails) {
           popupdetails.comments.push(comment);
         }
-        // setComments((prevcomments) => [...prevcomments, comment]);
+
     
         setComment("");
 
@@ -288,7 +295,7 @@ export  function Child({selectedItem}){
                           style={{ scrollbarWidth: "none" ,height:"58vh"}}
                         >
                           {column.cards.map((card, index) => (
-                            //  isUpvoted = upvotedCards.has(card.id)
+                     
                             <Draggable
                               key={card.id}
                               draggableId={card.id}
@@ -303,7 +310,7 @@ export  function Child({selectedItem}){
                                     snapshot.isDragging ? "scale-105" : ""
                                   } hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300`}
                                 >
-                                  {/* <h3 className="font-medium mb-2">{card.content}</h3> */}
+                                 
     
                                   <div className="flex  gap-5 text-sm text-gray-600 ">
                                     <div
@@ -347,22 +354,15 @@ export  function Child({selectedItem}){
               </div>
             </DragDropContext>
           </div>
-          {/* ?<div className="block space-y-4 md:flex md:space-y-0 md:space-x-4 rtl:space-x-reverse"> */}
-    
-          {/* <button
-              onClick={() => setIsOpen(true)}
-              className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Extra Large Modal
-            </button> */}
+        
           {isOpen && (
             <div className="fixed top-0 left-0 right-0 z-50 w-[100%]  overflow-x-hidden overflow-y-auto h-[90%] max-h-full flex items-center justify-center ">
               <div className="relative w-[90%] max-w-7xl max-h-ful h-[90%]">
                 <div className="relative bg-white rounded-lg shadow-sm h-[100%] overflow-y-auto scrollbar-hide border border-[#D1D5DB] ">
                   {/* Modal Header */}
                   <div className="flex items-center justify-between  p-1 md:p-2 border-b border-b-[#D1D5DB] rounded-t ">
-                    <button className="text-[#171717] font-medium p-2 border cursor-pointer border-[#D1D5DB] rounded-lg  hover:bg-[#F8F8F8]">
-                      <FiArrowLeft onClick={() => setIsOpen(false)} />
+                    <button className="text-[#171717] font-medium p-2 border cursor-pointer border-[#D1D5DB] rounded-lg  hover:bg-[#F8F8F8]" onClick={() => setIsOpen(false)}>
+                      <FiArrowLeft  />
                     </button>
                   </div>
     
@@ -413,17 +413,7 @@ export  function Child({selectedItem}){
                             >
                               <FiActivity /> Activities
                             </button>
-                            {/* <button
-                              type="button"
-                              className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500"
-                              id="tabs-with-underline-item-3"
-                              aria-selected="false"
-                              data-hs-tab="#tabs-with-underline-3"
-                              aria-controls="tabs-with-underline-3"
-                              role="tab"
-                            >
-                              Tab 3
-                            </button> */}
+                          
                           </nav>
                         </div>
                         <div className="mt-3">
@@ -520,7 +510,7 @@ export  function Child({selectedItem}){
                                 handleUpvoters(popupDetails.id);
                                 popupvotes(popupDetails.id);
                               }}
-                              // onClick={() => handleUpvoters(card.id)}
+                            
                               className="flex   text-[12px] leading-[12px] text-center text-[#171717] border border-[#DBDBDB] p-[6px] px-[8px] max-h-[40px]  mx-w-[40px ]
         rounded-[8px]   data-[upvoted=true]:bg-[#F6F6FF] data-[upvoted=true]:border-[#5551FF] me-6"
                               data-upvoted={upvotedCards.has(popupDetails.id)}
@@ -542,7 +532,10 @@ export  function Child({selectedItem}){
                         <div>
                           <div className="flex justify-start p-2 text-[13px] text-[#171717] ">
                             <p className="w-[50%]">Status</p>
-                            <p className="flex items-center gap-2">
+                            <p className={`flex items-center gap-2 
+  ${popupDetails.status === "Planned" ? "text-pink-500" : ""} 
+  ${popupDetails.status === "In Progress" ? "text-[#FFAB04]" : ""} 
+  ${popupDetails.status === "Completed" ? "text-green-500" : ""}`}> 
                               {" "}
                               {popupDetails.status == "Planned" ? (
                                 <span className={Styles.noscrollbar}>
@@ -569,7 +562,9 @@ export  function Child({selectedItem}){
                                   />
                                 </span>
                               )}
-                              {popupDetails.status}
+                               {popupDetails.status}
+                              
+                             
                             </p>
                           </div>
                           <div className="flex justify-start p-2 text-[13px] text-[#171717]">
@@ -592,10 +587,9 @@ export  function Child({selectedItem}){
                       </div>
                     </div>
     
-                    {/* accordian */}
                   </div>
     
-                  {/* Modal Footer */}
+                 
                 </div>
               </div>
             </div>

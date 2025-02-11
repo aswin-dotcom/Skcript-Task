@@ -8,7 +8,9 @@ export default function Parent() {
   const [isOpen, setIsOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  
 
+  // for filter
   const handleClick = (item) => {
     // setSelectedItem('');
     if(item=="Show all"){
@@ -21,17 +23,15 @@ export default function Parent() {
     // Assign the clicked value
     console.log("Selected Item:", selectedItem); // Debugging
   };
+  
 
+  // for filter dropdown
   const toggleFirstDropdown = () => {
     setIsOpen(!isOpen);
     if (!isOpen) setStatusOpen(false); // Close the second dropdown
   };
 
-  const toggleSecondDropdown = () => {
-    setStatusOpen(!statusOpen);
-    if (!statusOpen) setIsOpen(false); // Close the first dropdown
-  };
-
+ 
   return (
     <>
         <div className={Styles.center}>
