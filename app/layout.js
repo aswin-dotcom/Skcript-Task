@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
             </p>
           </div>
           <div className="cursor-pointer group  hover:text-blue-500">
-            <p className="p-2 flex text-[13px]">
+            <p className="p-2 flex text-[13px] whitespace-nowrap">
               <PiBookBookmark
                 size={15}
                 className="pr-1 group-hover:text-blue-500"

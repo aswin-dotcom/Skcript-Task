@@ -47,3 +47,10 @@
   .green{
     filter: invert(58%) sepia(57%) saturate(551%) hue-rotate(137deg) brightness(98%) contrast(93%);
   }
+  @media screen and (max-width:500px)
+  {
+    .center{
+        margin-left: 3% !important;
+        margin-right: 3% !important;
+    }
+  }

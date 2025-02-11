@@ -97,7 +97,7 @@ export default function Parent() {
             </div>
           )}
         </div> */}
-        <div className="relative inline-flex h-[27px]">
+        <div className="relative inline-flex h-[27px] whitespace-nowrap">
           <button
             onClick={toggleFirstDropdown}
             className={Styles.dropdown}
