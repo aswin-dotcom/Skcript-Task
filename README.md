@@ -48,8 +48,8 @@ npm run start
 /Skcript-Task
 ├── app/               # Application source code
 │   ├── Components/    # Reusable components
-│   │   ├── Filter.js   # Parent component
-│   │   ├── Task.js    # Child component
+│   │   ├── Filter.js  
+│   │   ├── Task.js    
 │   │   ├── Styles.module.css  # CSS Module for styling
 │   ├── api/task/      # API route handlers
 │   │   ├── route.js    # API route file
