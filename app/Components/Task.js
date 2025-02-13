@@ -12,15 +12,13 @@ import { FiActivity } from "react-icons/fi";
 import { LiaCommentsSolid } from "react-icons/lia";
 
 let initialColumns = [];
-export function Child({ selectedItem }) {
+export function Task({ selectedItem }) {
   const [columns, setColumns] = useState(initialColumns);
   const [upvotedCards, setUpvotedCards] = useState(new Set());
-  const [filter, setfilter] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [popupDetails, setPopupDetails] = useState(null);
   const [tabs, setTabs] = useState(true);
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
   const [subscribe, setSubscribe] = useState("Unsubscribe");
 
   const timestamp = new Date().toLocaleString("en-US", {

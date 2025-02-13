@@ -1,5 +1,5 @@
-import Parent from "./Components/Parent";
+import Filter from "./Components/Filter";
 
 export default function Home() {
-  return <Parent />;
+  return <Filter />;
 }

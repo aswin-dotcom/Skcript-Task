@@ -2,9 +2,9 @@
 
 import Styles from "./Styles.module.css";
 import { useState } from "react";
-import { Child } from "./Child.js";
+import { Task } from "./Task.js";
 
-export default function Parent() {
+export default function Filter() {
   const [isOpen, setIsOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -96,7 +96,7 @@ export default function Parent() {
         </div>
       </div>
       <div className="md:mx-[16%] mt-[2%]">
-        <Child selectedItem={selectedItem} />
+        <Task selectedItem={selectedItem} />
       </div>
     </>
   );
