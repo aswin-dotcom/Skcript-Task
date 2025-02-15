@@ -10,179 +10,60 @@ import { PiWarningCircle } from "react-icons/pi";
 import { GoComment } from "react-icons/go";
 import { FiActivity } from "react-icons/fi";
 import { LiaCommentsSolid } from "react-icons/lia";
+import {useTask} from '../Store/Taskstore'
 
-let initialColumns = [];
+// let initialColumns = [];
 export function Task({ selectedItem }) {
-  const [columns, setColumns] = useState(initialColumns);
-  const [upvotedCards, setUpvotedCards] = useState(new Set());
-  const [isOpen, setIsOpen] = useState(false);
-  const [popupDetails, setPopupDetails] = useState(null);
-  const [tabs, setTabs] = useState(true);
-  const [comment, setComment] = useState("");
-  const [subscribe, setSubscribe] = useState("Unsubscribe");
+  // const [columns, setColumns] = useState(initialColumns);
+  // const [upvotedCards, setUpvotedCards] = useState(new Set());
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [popupDetails, setPopupDetails] = useState(null);
+  // const [tabs, setTabs] = useState(true);
+  // const [comment, setComment] = useState("");
+  // const [subscribe, setSubscribe] = useState("Unsubscribe");
 
-  const timestamp = new Date().toLocaleString("en-US", {
-    year: "numeric", // Displays the full year (e.g., 2025)
-    month: "short", // Displays a short month name (e.g., Feb)
-    day: "numeric", //Displays the day of the month (e.g., 11)
-    hour: "numeric", //Displays the hour (e.g., 3 PM)
-    minute: "numeric", //Displays the minutes (e.g., 45)
-    hour12: true, // Enables 12-hour format with AM/PM
-  });
+
 
   //useEffect to load the data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/task");
-        const data = await res.json();
-        setColumns(data);
-        initialColumns = data;
-        console.log(initialColumns, "Initial column");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+
+    const {
+      columns,
+      upvotedCards,
+      filter,
+      isOpen,
+      popupDetails,
+      popupvotes,
+      toggleOpen,
+      tabs,
+      comment,
+      subscribe,
+      fetchTasks,
+      setFilter,
+      filterColumns,
+      handleUpvoters,
+      handleSubscription,
+      opendetails,
+      addCommentToCard,
+      onDragEnd,
+      setTabs,
+      setComment,
+      
+    } = useTask();
+    
+    useEffect(() => {
+      fetchTasks();
+      // setFilter(selectedItem)
+    }, []);
+    
+    useEffect(() => {
+      setFilter(selectedItem)
+      filterColumns();
+    }, [selectedItem]);
+    
+    const onClickHandler = (id) => {
+      addCommentToCard(id, comment);
     };
-
-    fetchData();
-  }, []);
-
-  //useEffect to identify the particular task based on  filter
-  useEffect(() => {
-    const filteredColumns = initialColumns.map((column) => ({
-      ...column,
-      cards: column.cards.filter((card) => card.Board.includes(selectedItem)),
-    }));
-    setColumns(filteredColumns);
-  }, [selectedItem]);
-
-  //handle upvotes in home page
-  const handleUpvoters = (cardId) => {
-    setColumns((prevColumns) =>
-      prevColumns.map((col) => ({
-        ...col,
-        cards: col.cards.map((card) =>
-          card.id === cardId
-            ? {
-                ...card,
-                upvotes: upvotedCards.has(cardId)
-                  ? card.upvotes - 1
-                  : card.upvotes + 1,
-              }
-            : card
-        ),
-      }))
-    );
-
-    setUpvotedCards((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(cardId)) {
-        newSet.delete(cardId); // Remove upvote
-      } else {
-        newSet.add(cardId); // Add upvote
-      }
-      return newSet;
-    });
-  };
-
-  //handle upvotes in popuo page
-  const popupvotes = (cardId) => {
-    setPopupDetails((prev) => ({
-      ...prev,
-      upvotes: upvotedCards.has(cardId) ? prev.upvotes - 1 : prev.upvotes + 1,
-    }));
-  };
-
-  //handle drag and drop event in the view
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-    const { source, destination } = result;
-
-    if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = columns.find((col) => col.id === source.droppableId);
-      const destColumn = columns.find(
-        (col) => col.id === destination.droppableId
-      );
-      const sourceCards = [...sourceColumn.cards];
-      const destCards = [...destColumn.cards];
-      const [removed] = sourceCards.splice(source.index, 1);
-
-      destCards.splice(destination.index, 0, removed);
-      removed.status = destColumn.title;
-      removed.activies.push(
-        `Task Status Changed to ${removed.status} at ${timestamp}`
-      );
-      console.log(removed);
-
-      setColumns(
-        columns.map((col) => {
-          if (col.id === source.droppableId) {
-            return { ...col, cards: sourceCards };
-          }
-          if (col.id === destination.droppableId) {
-            return { ...col, cards: destCards };
-          }
-          return col;
-        })
-      );
-      console.log(columns);
-    } else {
-      const column = columns.find((col) => col.id === source.droppableId);
-      const copiedCards = [...column.cards];
-      const [removed] = copiedCards.splice(source.index, 1);
-      copiedCards.splice(destination.index, 0, removed);
-      setColumns(
-        columns.map((col) => {
-          if (col.id === source.droppableId) {
-            return { ...col, cards: copiedCards };
-          }
-          return col;
-        })
-      );
-    }
-  };
-
-  //changing the state of unsubscribe button in popup
-  const handleSubscription = () => {
-    setSubscribe(subscribe === "Unsubscribe" ? "Get notified" : "Unsubscribe");
-  };
-
-  //get task details to open the popup
-  const opendetails = (id) => {
-    console.log(id);
-    const popupdetails = findCardById(columns, id);
-
-    // Set the popup details (Assuming setPopupDetails exists)
-    if (popupdetails) {
-      setIsOpen(true);
-      setPopupDetails(popupdetails);
-      console.log(popupdetails, "popupdetails");
-    } else {
-      console.log("Card not found!");
-    }
-    setIsOpen(true);
-  };
-
-  // using cardId and columns we can get the task details
-  const findCardById = (columns, cardId) => {
-    for (const column of columns) {
-      const card = column.cards.find((c) => c.id === cardId);
-      if (card) return card;
-    }
-    return null; // Return null if no card is found
-  };
-
-  //for adding comments for a particular task in popup
-  const onClickHandler = (id) => {
-    if (comment.length > 0) {
-      const popupdetails = findCardById(columns, id);
-      if (popupdetails) {
-        popupdetails.comments.push(comment);
-      }
-
-      setComment("");
-    }
-  };
+    
   return (
     <div className="bg-white">
       <div className="p-2 bg-white min-h-screen ">
@@ -294,7 +175,7 @@ export function Task({ selectedItem }) {
               <div className="flex items-center justify-between  p-1 md:p-2 border-b border-b-[#D1D5DB] rounded-t ">
                 <button
                   className="text-[#171717] font-medium p-2 border cursor-pointer border-[#D1D5DB] rounded-lg  hover:bg-[#F8F8F8]"
-                  onClick={() => setIsOpen(false)}
+                  onClick={toggleOpen}
                 >
                   <FiArrowLeft />
                 </button>
@@ -334,14 +215,14 @@ export function Task({ selectedItem }) {
                         aria-orientation="horizontal"
                       >
                         <button
-                          onClick={() => setTabs(true)}
+                          onClick={()=>setTabs(true)}
                           type="button"
                           className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-1 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500 active"
                         >
                           <GoComment /> Comments
                         </button>
                         <button
-                          onClick={() => setTabs(false)}
+                          onClick={()=>setTabs(false)}
                           type="button"
                           className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-1 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500"
                         >
