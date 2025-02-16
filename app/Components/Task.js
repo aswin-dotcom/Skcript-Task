@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { RiArrowUpSLine } from "react-icons/ri";
 import Styles from "./Styles.module.css";
@@ -12,19 +12,8 @@ import { FiActivity } from "react-icons/fi";
 import { LiaCommentsSolid } from "react-icons/lia";
 import {useTask} from '../Store/Taskstore'
 
-// let initialColumns = [];
-export function Task({ selectedItem }) {
-  // const [columns, setColumns] = useState(initialColumns);
-  // const [upvotedCards, setUpvotedCards] = useState(new Set());
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [popupDetails, setPopupDetails] = useState(null);
-  // const [tabs, setTabs] = useState(true);
-  // const [comment, setComment] = useState("");
-  // const [subscribe, setSubscribe] = useState("Unsubscribe");
+export function Task() {
 
-
-
-  //useEffect to load the data
 
     const {
       columns,
@@ -47,6 +36,7 @@ export function Task({ selectedItem }) {
       onDragEnd,
       setTabs,
       setComment,
+      selectedItem
       
     } = useTask();
     

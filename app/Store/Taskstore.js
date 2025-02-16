@@ -18,13 +18,15 @@ export const useTask = create((set) => ({
   comment: "",
   comments: [],
   subscribe: "Unsubscribe",
+  popupOpen: false,
+  selectedItem: "",
 
   fetchTasks: async () => {
     try {
       const res = await fetch("/api/task");
       const data = await res.json();
       set({ columns: data });
-      initialColumns= data; 
+      initialColumns = data;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -47,25 +49,10 @@ export const useTask = create((set) => ({
       return { columns: updatedColumns };
     }),
 
-  //   handleUpvoters: (cardId) =>opendetails
-  //     set((state) => {
-  //     //   const newUpvotedCards = new Set(state.upvotedCards);
-  //     columns = state.columns.map((col) => ({
-  //         ...col,
-  //         cards: col.cards.map((card) =>
-  //           card.id === cardId
-  //             ? {
-  //                 ...card,
-  //                 upvotes: state.upvotedCards.has(cardId)
-  //                   ? card.upvotes - 1
-  //                   : card.upvotes + 1,
-  //               }
-  //             : card
-  //         ),
-  //       }));
+  togglePopup: () => set((state) => ({ popupOpen: !state.popupOpen })),
+  setSelectedItem: (item) =>
+    set(() => ({ selectedItem: item === "Show all" ? "" : item })),
 
-  //     //   return { columns: updatedColumns, upvotedCards: newUpvotedCards };
-  //     }),
   handleUpvoters: (cardId) =>
     set((state) => {
       const newUpvotedCards = new Set(state.upvotedCards);

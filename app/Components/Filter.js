@@ -1,31 +1,18 @@
 "use client";
 
 import Styles from "./Styles.module.css";
-import { useState } from "react";
 import { Task } from "./Task.js";
+import {useTask} from '../Store/Taskstore'
 
 export default function Filter() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [statusOpen, setStatusOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
+  const { popupOpen, togglePopup , selectedItem, setSelectedItem} = useTask();
 
-  // for filter
+  
   const handleClick = (item) => {
-    // setSelectedItem('');
-    if (item == "Show all") {
-      setSelectedItem("");
-    } else {
-      setSelectedItem(item);
-    }
-    // Assign the clicked value
+    setSelectedItem(item);
     console.log("Selected Item:", selectedItem); // Debugging
   };
 
-  // for filter dropdown
-  const toggleFirstDropdown = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) setStatusOpen(false); // Close the second dropdown
-  };
 
   return (
     <>
@@ -42,16 +29,16 @@ export default function Filter() {
         <div className={Styles.filter}>
           <div className="relative cursor-pointer inline-flex h-[27px] whitespace-nowrap">
             <button
-              onClick={toggleFirstDropdown}
+              onClick={togglePopup}
               className={Styles.dropdown}
               type="button"
               aria-haspopup="menu"
-              aria-expanded={isOpen}
+              aria-expanded={popupOpen}
             >
               Show All
               <svg
                 className={`w-2.5 h-2.5 ms-3 transition-transform ${
-                  isOpen ? "rotate-180" : ""
+                  popupOpen ? "rotate-180" : ""
                 }`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +55,7 @@ export default function Filter() {
               </svg>
             </button>
 
-            {isOpen && (
+            {popupOpen && (
               <div className={Styles.ul}>
                 <ul
                   className="text-sm border border-[#F2E2E2] w-[176px] rounded-[5%] text-gray-700 bg-white"
