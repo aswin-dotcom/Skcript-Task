@@ -36,7 +36,8 @@ export function Task() {
       onDragEnd,
       setTabs,
       setComment,
-      selectedItem
+      selectedItem,
+      initialColumns
       
     } = useTask();
     

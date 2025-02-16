@@ -7,7 +7,7 @@ const timestamp = new Date().toLocaleString("en-US", {
   minute: "numeric", //Displays the minutes (e.g., 45)
   hour12: true, // Enables 12-hour format with AM/PM
 });
-let initialColumns = [];
+let initialColumns =[];
 export const useTask = create((set) => ({
   columns: [],
   upvotedCards: new Set(),
@@ -21,12 +21,14 @@ export const useTask = create((set) => ({
   popupOpen: false,
   selectedItem: "",
 
+
   fetchTasks: async () => {
     try {
       const res = await fetch("/api/task");
       const data = await res.json();
       set({ columns: data });
-      initialColumns = data;
+      initialColumns=data;
+      // set({initialColumns:columns})
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -192,8 +194,9 @@ export const useTask = create((set) => ({
       movedCard.activies.push(
         `Task Status Changed to ${movedCard.status} at ${timestamp}`
       );
+      initialColumns=updatedColumns;
 
-      return { columns: updatedColumns };
+      return { columns: updatedColumns};
     }),
 }));
 
