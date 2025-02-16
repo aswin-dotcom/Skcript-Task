@@ -53,6 +53,8 @@ npm run start
 │   │   ├── Styles.module.css  # CSS Module for styling
 │   ├── api/task/      # API route handlers
 │   │   ├── route.js    # API route file
+│   ├── Store/         # State management (if applicable)
+│   │   ├── Taskstore.js # Task state management
 │   ├── Styles.module.css # Additional styles
 │   ├── globals.css    # Global CSS file
 │   ├── layout.js      # Layout configuration
