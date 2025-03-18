@@ -3,6 +3,7 @@
 import Styles from "./Styles.module.css";
 import { Task } from "./Task.js";
 import {useTask} from '../Store/Taskstore'
+import Board from "./Board/page.js";
 
 export default function Filter() {
   const { popupOpen, togglePopup , selectedItem, setSelectedItem} = useTask();
@@ -84,6 +85,7 @@ export default function Filter() {
       </div>
       <div className="md:mx-[16%] mt-[2%]">
         <Task selectedItem={selectedItem} />
+        {/* <Board /> */}
       </div>
     </>
   );
