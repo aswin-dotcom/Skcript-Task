@@ -221,7 +221,7 @@ export async function GET() {
       ],
     },
   ];
-
+  initialColumns = initialColumns.filter((item) => item.title == "Planned");
 
 
   return Response.json(initialColumns);

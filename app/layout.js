@@ -7,6 +7,8 @@ import { MdOutlineRocketLaunch } from "react-icons/md";
 import { PiBookBookmark } from "react-icons/pi";
 import Link from "next/link";
 
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -56,11 +58,13 @@ export default function RootLayout({ children }) {
                 BOARDS
               </Link>
             </div>
-            <div className="cursor-pointer group   text-blue-500">
-              <p className="p-2 flex text-[13px]">
-                <GoTelescope size={15} className="pr-1 text-blue-500 " />
-                ROADMAP
-              </p>
+            <div className="cursor-pointer group   text-blue-500" href="/ ">
+              <Link href="/">
+                <p className="p-2 flex text-[13px]">
+                  <GoTelescope size={15} className="pr-1 text-blue-500 " />
+                  ROADMAP
+                </p>
+              </Link>
             </div>
             <div className=" cursor-pointer  hover:text-blue-500">
               <p className="p-2 flex text-[13px]">
@@ -82,6 +86,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </div>
+     {/* {children}  */}
 
         {children}
       </body>

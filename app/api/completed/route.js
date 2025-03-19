@@ -221,7 +221,7 @@ export async function GET() {
       ],
     },
   ];
-
+  initialColumns = initialColumns.filter((item) => item.title == "Completed");
 
 
   return Response.json(initialColumns);

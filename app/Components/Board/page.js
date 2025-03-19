@@ -1,29 +1,69 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useTask from "../../Store/Taskstore";
 import { RiArrowUpSLine } from "react-icons/ri";
+import { useQuery } from "@tanstack/react-query";
+
 const Board = () => {
   const columns = useTask((state) => state.columns);
   const upvotedCards = useTask((state) => state.upvotedCards);
   const handleUpvoters = useTask((state) => state.handleUpvoters);
   const togglePopup = useTask((state) => state.togglePopup);
   const popupOpen = useTask((state) => state.popupOpen);
-  const selectedItem = useTask((state) => state.selectedItem);
-  const setSelectedItem = useTask((state) => state.setSelectedItem);
-  const filterColumns = useTask((state) => state.filterColumns);
-  const setFilter = useTask((state) => state.setFilter);
+  // const selectedItem = useTask((state) => state.selectedItem);
+  // const setSelectedItem = useTask((state) => state.setSelectedItem);
+  // const filterColumns = useTask((state) => state.filterColumns);
+  // const setFilter = useTask((state) => state.setFilter);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [inital, setInitial] = useState([]);
 
-  
+  const getSearchResults = async (selectedItem) => {
+    const { data } = await fetch(`/api/${selectedItem}`);
+    setInitial(data);
+  };
+  const { data } = useQuery(["/api", selectedItem], getSearchResults);
 
   const handleClick = (item) => {
     setSelectedItem(item);
-    console.log("Selected Item:", selectedItem); // Debugging
+    console.log("Selected Item:", selectedItem);
+    if (selectedItem == "Planned") {
+      // Debugging
+      // getplannedData(selectedItem);
+      getSearchResults();
+    } else if (selectedItem == "In progress") {
+      // getinprogressdata(selectedItem);
+      getSearchResults();
+    } else if (selectedItem == "Completed") {
+      // getcompleted(selectedItem);
+      getSearchResults();
+    }
   };
 
   useEffect(() => {
-    setFilter(selectedItem);
-    filterColumns();
-  }, [selectedItem]);
+    setInitial(columns);
+  }, []);
+
+  // const fetchData = async () => {
+  //   const res = await fetch('http://localhost:3004/invoices');
+  //   return res.json();
+  // };
+
+  // const getplannedData = async () => {
+  //   const res = await fetch("/api/planned/");
+  //   const filter = await res.json();
+
+  //   setInitial(filter);
+  // };
+  // const getinprogressdata = async () => {
+  //   const res = await fetch("api/inprogress/");
+  //   const filter = await res.json();
+  //   setInitial(filter);
+  // };
+  // const getcompleted = async () => {
+  //   const res = await fetch("api/completed/");
+  //   const filter = await res.json();
+  //   setInitial(filter);
+  // };
 
   return (
     <div className="flex-col justify-center items-center">
@@ -70,12 +110,7 @@ const Board = () => {
                   className="text-sm border border-[#F2E2E2] w-[176px] rounded-[5%] text-gray-700 bg-white"
                   aria-labelledby="dropdownDefaultButton"
                 >
-                  {[
-                    "Show all",
-                    "Bugs & Fixes",
-                    "Feature request",
-                    "Integration",
-                  ].map((item) => (
+                  {["Planned", "In progress", "Completed"].map((item) => (
                     <li key={item}>
                       <a
                         className="block cursor-pointer px-4 py-1 m-1 rounded-[5px] hover:bg-gray-100  "
@@ -93,7 +128,7 @@ const Board = () => {
       </div>
 
       <div className="">
-        {columns.map((data) =>
+        {inital.map((data) =>
           data.cards.map((task) => (
             <div
               className="m-5 ms-[100px]  mb-[20px] w-[75%] flex  gap-5 text-sm text-gray-600 "
