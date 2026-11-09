@@ -14,8 +14,8 @@ const Board = () => {
   // const setSelectedItem = useTask((state) => state.setSelectedItem);
   // const filterColumns = useTask((state) => state.filterColumns);
   // const setFilter = useTask((state) => state.setFilter);
-  const [selectedItem, setSelectedItem] = useState("");
-  const [inital, setInitial] = useState([]);
+  // const [selectedItem, setSelectedItem] = useState("");
+  // const [inital, setInitial] = useState([]);
 
   const getSearchResults = async (selectedItem) => {
     const { data } = await fetch(`/api/${selectedItem}`);
